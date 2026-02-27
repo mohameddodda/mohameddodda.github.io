@@ -179,9 +179,13 @@
 
         /* Mobile responsiveness */
         @media (max-width: 768px) {
+            body::after {
+                background: rgba(0, 0, 0, 0.5); /* Less dim overlay */
+            }
+
             h1 {
                 font-size: 3rem; /* Reduced from 6rem */
-                margin: -5rem 0 0 0; /* Adjusted from -10rem */
+                margin: -7rem 0 0 0; /* Moved up more to show wolf's face */
             }
 
             .socials {
