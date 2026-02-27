@@ -176,6 +176,36 @@
         .corner-btn.right {
             right: 15px;
         }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem; /* Reduced from 6rem */
+                margin: -5rem 0 0 0; /* Adjusted from -10rem */
+            }
+
+            .socials {
+                gap: 2rem; /* Reduced gap */
+                margin: 10em 0 2.5em 0; /* Adjusted margin */
+            }
+
+            .socials a {
+                font-size: 2rem; /* Reduced from 4rem */
+            }
+
+            .corner-btn {
+                font-size: 0.8rem; /* Slightly smaller */
+                bottom: 10px; /* Closer to edge */
+            }
+
+            .corner-btn.left {
+                left: 10px;
+            }
+
+            .corner-btn.right {
+                right: 10px;
+            }
+        }
     </style>
     <!-- Video background with speed set to 0.5x in code -->
     <video id="background-video" autoplay muted loop playsinline>
