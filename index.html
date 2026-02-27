@@ -185,12 +185,12 @@
 
             h1 {
                 font-size: 3rem; /* Reduced from 6rem */
-                margin: -12rem 0 0 0; /* Moved more to top */
+                margin: 2rem 0 0 0; /* Fixed: was -12rem pushing it off-screen */
             }
 
             .socials {
                 gap: 2rem; /* Reduced gap */
-                margin: 20em 0 2.5em 0; /* Moved more to bottom */
+                margin: 3rem 0 2.5em 0; /* Fixed: was 20em - reduced significantly */
             }
 
             .socials a {
@@ -211,13 +211,33 @@
             }
         }
     </style>
-    <!-- Video background with speed set to 0.5x in code -->
-    <video id="background-video" autoplay muted loop playsinline>
+    <!-- Video background -->
+    <video id="background-video" muted loop playsinline>
         <source src="assets/wolf_anim.mp4" type="video/mp4">
     </video>
 
     <script>
-        document.getElementById('background-video').playbackRate = 0.5;
+        // Set video speed
+        const video = document.getElementById('background-video');
+        video.playbackRate = 0.5;
+
+        // Try to autoplay video
+        const playVideo = () => {
+            video.play().catch(err => {
+                console.log('Autoplay prevented, waiting for user interaction');
+            });
+        };
+
+        // Try immediately on load
+        playVideo();
+
+        // Fallback: play on any user interaction (tap, click, scroll)
+        const interactionEvents = ['click', 'touchstart', 'scroll', 'keypress'];
+        interactionEvents.forEach(event => {
+            document.addEventListener(event, () => {
+                playVideo();
+            }, { once: true });
+        });
     </script>
 
 </head>
