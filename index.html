@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L0neW0lf</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #6e7681;                     /* Even darker text for anonymity vibe */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            text-align: center;
+            overflow: hidden;                   /* Prevents scroll issues */
+            position: relative;
+        }
+
+        /* Video background */
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            playbackRate: 0.5;  /* Adjust video speed here (0.25 = slow, 1 = normal, 2 = fast) */
+        }
+
+        /* Optional dark overlay for better text readability */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);    /* Semi-transparent black overlay */
+            z-index: -1;
+        }
+
+        @keyframes subtleZoom {
+            0% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1.15);  /* Zoom in center */
+            }
+        }
+
+        h1 {
+            font-size: 6rem;                    /* Bigger for impact */
+            margin: -10rem 0 0 0;               /* Move up more */
+            font-weight: bold;
+            font-family: 'Courier New', monospace;  /* Monospace font */
+            color: #2a3a4a;                     /* Darker bluish grey */
+            text-shadow: 0 0 15px rgba(88, 166, 255, 0.6);  /* Glow for pop on dark bg */
+            animation: magicalGlow 2s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes magicalGlow {
+            0% {
+                text-shadow: 0 0 15px rgba(88, 166, 255, 0.6), 0 0 30px rgba(88, 166, 255, 0.4);
+            }
+            100% {
+                text-shadow: 0 0 25px rgba(88, 166, 255, 0.9), 0 0 50px rgba(88, 166, 255, 0.6);
+            }
+        }
+
+        .socials {
+            display: flex;
+            gap: 3.5rem;
+            margin: 18em 0 2.5em 0;             /* Move down more */
+            z-index: 1;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .socials a {
+            color: #6e7681;
+            font-size: 4rem;
+            transition: color 0.3s, transform 0.3s;
+            animation: iconGlow 3s ease-in-out infinite alternate;
+        }
+
+        .socials a:hover {
+            color: #58a6ff;
+            transform: scale(1.25);
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes iconGlow {
+            0% {
+                text-shadow: 0 0 5px rgba(201, 209, 217, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 15px rgba(88, 166, 255, 0.8);
+            }
+        }
+
+
+        /* Floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(88, 166, 255, 0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Bottom corner buttons - text only, no border */
+        .corner-btn {
+            position: fixed;
+            bottom: 15px;
+            font-size: 0.9rem;
+            color: #555;
+            text-decoration: none;
+            z-index: 10;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .corner-btn:hover {
+            opacity: 0.8;
+        }
+
+        .corner-btn.left {
+            left: 15px;
+        }
+
+        .corner-btn.right {
+            right: 15px;
+        }
+    </style>
+    <!-- Video background with speed set to 0.5x in code -->
+    <video id="background-video" autoplay muted loop playsinline>
+        <source src="assets/wolf_anim.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        document.getElementById('background-video').playbackRate = 0.5;
+    </script>
+
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+    </div>
+
+    <h1>L0neW0lf</h1>
+
+    <div class="socials">
+        <!-- Add your real links here – delete unused ones -->
+        <a href="https://github.com/mohameddodda" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://discord.gg/mohameddodda" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+        <a href="https://www.tiktok.com/@asomebody000" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.instagram.com/mohameddodda_" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <!-- Add more: YouTube <i class="fab fa-youtube"></i>, etc. -->
+    </div>
+
+    <!-- Bottom corner buttons -->
+    <a href="#" class="corner-btn left">project</a>
+    <a href="https://www.youtube.com/watch?v=dEIAdXGSChY&list=RDdEIAdXGSChY&start_radio=1" target="_blank" class="corner-btn right">do not press</a>
+
+</body>
+</html>
