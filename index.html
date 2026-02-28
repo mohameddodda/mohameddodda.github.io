@@ -6,6 +6,12 @@
     <title>L0neW0lf</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -14,11 +20,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #54647a;                     /* Even darker text for anonymity vibe */
+            color: #54647a;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             text-align: center;
-            overflow: hidden;                   /* Prevents scroll issues */
+            overflow: hidden;
             position: relative;
+            background: #0a0a12;
         }
 
         /* Video background */
@@ -32,7 +39,7 @@
             z-index: -2;
         }
 
-        /* CSS fallback background - shows if video fails to load/play on mobile */
+        /* CSS fallback background */
         #background-fallback {
             position: fixed;
             top: 0;
@@ -40,7 +47,7 @@
             width: 100%;
             height: 100%;
             z-index: -3;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #0a0a12 0%, #1a1a2e 50%, #0f3460 100%);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
         }
@@ -51,71 +58,142 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Dark overlay for better text readability */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: -1;
+        /* Main content container with discovery animation */
+        .content-container {
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
         }
 
-        @keyframes subtleZoom {
+        /* Title with discovery animation */
+        h1 {
+            font-size: 6rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #58a6ff;
+            text-shadow: 0 0 30px rgba(88, 166, 255, 0.8), 0 0 60px rgba(88, 166, 255, 0.4);
+            animation: titleReveal 2s ease-out forwards, magicalGlow 3s ease-in-out infinite alternate;
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        @keyframes titleReveal {
             0% {
-                transform: scale(1.05);
+                opacity: 0;
+                transform: translateY(-30px) scale(0.9);
+                filter: blur(10px);
             }
             100% {
-                transform: scale(1.15);  /* Zoom in center */
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
             }
-        }
-
-        h1 {
-            font-size: 6rem;                    /* Smaller for web */
-            margin: -3rem 0 0 0;               /* Moved more to top */
-            font-weight: bold;
-            font-family: 'Courier New', monospace;  /* Monospace font */
-            color: #213d5a;                     /* Darker bluish grey */
-            text-shadow: 0 0 15px rgba(88, 166, 255, 0.6);  /* Glow for pop on dark bg */
-            animation: magicalGlow 2s ease-in-out infinite alternate;
-            z-index: 1;
         }
 
         @keyframes magicalGlow {
             0% {
-                text-shadow: 0 0 15px rgba(88, 166, 255, 0.6), 0 0 30px rgba(88, 166, 255, 0.4);
+                text-shadow: 0 0 30px rgba(88, 166, 255, 0.8), 0 0 60px rgba(88, 166, 255, 0.4);
             }
             100% {
-                text-shadow: 0 0 25px rgba(88, 166, 255, 0.9), 0 0 50px rgba(88, 166, 255, 0.6);
+                text-shadow: 0 0 40px rgba(88, 166, 255, 1), 0 0 80px rgba(88, 166, 255, 0.6), 0 0 120px rgba(88, 166, 255, 0.3);
             }
         }
 
+        /* Game stats section */
+        .game-stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
+            opacity: 0;
+        }
+
+        .game-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0.5rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-stat:hover {
+            transform: translateY(-3px);
+            background: rgba(88, 166, 255, 0.1);
+            border-color: rgba(88, 166, 255, 0.5);
+            box-shadow: 0 5px 20px rgba(88, 166, 255, 0.2);
+        }
+
+        .game-stat i {
+            font-size: 1rem;
+            color: #58a6ff;
+        }
+
+        .game-stat .game-name {
+            font-size: 0.65rem;
+            color: #8b949e;
+            font-weight: 600;
+        }
+
+        .game-stat .game-hours {
+            font-size: 0.55rem;
+            color: #6e7681;
+        }
+
+        /* Socials section */
         .socials {
             display: flex;
-            gap: 3.5rem;
-            margin: 30em 0 2.5em 0;             /* Moved more to bottom */
+            gap: 2.5rem;
             z-index: 1;
-            animation: fadeInUp 2s ease-out;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+            opacity: 0;
         }
 
         .socials a {
             color: #6e7681;
-            font-size: 4rem;
-            transition: color 0.3s, transform 0.3s;
-            animation: iconGlow 3s ease-in-out infinite alternate;
+            font-size: 3rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .socials a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            background: rgba(88, 166, 255, 0.3);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.3s ease;
+            z-index: -1;
         }
 
         .socials a:hover {
             color: #58a6ff;
-            transform: scale(1.25);
+            transform: scale(1.2) translateY(-5px);
+        }
+
+        .socials a:hover::after {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.5);
         }
 
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             100% {
                 opacity: 1;
@@ -123,17 +201,7 @@
             }
         }
 
-        @keyframes iconGlow {
-            0% {
-                text-shadow: 0 0 5px rgba(201, 209, 217, 0.5);
-            }
-            100% {
-                text-shadow: 0 0 15px rgba(88, 166, 255, 0.8);
-            }
-        }
-
-
-        /* Floating particles effect */
+        /* Floating particles */
         .particles {
             position: fixed;
             top: 0;
@@ -171,7 +239,7 @@
             }
         }
 
-        /* Bottom corner buttons - text only, no border */
+        /* Corner buttons */
         .corner-btn {
             position: fixed;
             bottom: 15px;
@@ -195,30 +263,141 @@
             right: 15px;
         }
 
+        /* Glass Windows Container */
+        .glass-windows {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 2s forwards;
+            opacity: 0;
+        }
+
+        .glass-window {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(88, 166, 255, 0.25);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            width: 380px;
+        }
+
+        .glass-window:hover {
+            transform: translateY(-5px);
+            border-color: rgba(88, 166, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(88, 166, 255, 0.2);
+        }
+
+        .glass-window h3 {
+            color: #58a6ff;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Instagram Pictures Grid */
+        .insta-pics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.6rem;
+        }
+
+        .insta-pic {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .insta-pic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* YouTube Embed */
+        .youtube-embed {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .youtube-embed iframe {
+            width: 100%;
+            height: 100%;
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 768px) {
-            /* Dark overlay for mobile */
-            body::after {
-                background: rgba(0, 0, 0, 0.4);
+            h1 {
+                font-size: 2.5rem;
             }
 
-            h1 {
-                font-size: 3rem; /* Reduced from 6rem */
-                margin: -9rem 0 0 0; /* Fixed: was -12rem pushing it off-screen */
+            .game-stats {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .game-stat {
+                padding: 0.8rem 1rem;
+            }
+
+            .game-stat i {
+                font-size: 1.5rem;
+            }
+
+            .game-stat .game-name {
+                font-size: 0.7rem;
+            }
+
+            .game-stat .game-hours {
+                font-size: 0.6rem;
             }
 
             .socials {
-                gap: 2rem; /* Reduced gap */
-                margin: 15rem 0 2.5em 0; /* Fixed: was 20em - reduced significantly */
+                gap: 1.5rem;
             }
 
             .socials a {
-                font-size: 2rem; /* Reduced from 4rem */
+                font-size: 2rem;
+            }
+
+            /* Glass windows */
+            .glass-window {
+                width: 90% !important;
+                max-width: 350px !important;
+                padding: 1rem !important;
+            }
+
+            .glass-window h3 {
+                font-size: 1rem !important;
+                margin-bottom: 0.8rem !important;
+            }
+
+            .insta-pics {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.4rem !important;
+            }
+
+            .insta-pic {
+                aspect-ratio: 1 !important;
+                border-radius: 6px !important;
+            }
+
+            .youtube-embed {
+                aspect-ratio: 16/9 !important;
+                border-radius: 8px !important;
             }
 
             .corner-btn {
-                font-size: 0.8rem; /* Slightly smaller */
-                bottom: 10px; /* Closer to edge */
+                font-size: 0.8rem;
+                bottom: 10px;
             }
 
             .corner-btn.left {
@@ -229,50 +408,7 @@
                 right: 10px;
             }
         }
-
-        /* Tap to start overlay for mobile */
-        #tap-to-start {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        #tap-to-start.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #tap-to-start span {
-            color: #fff;
-            font-size: 1.5rem;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            text-shadow: 0 0 10px rgba(88, 166, 255, 0.8);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
-
-        /* Hide on desktop - only show on touch devices */
-        @media (hover: hover) and (pointer: fine) {
-            #tap-to-start {
-                display: none;
-            }
-        }
     </style>
-    <!-- Video background - autoplay for mobile compatibility -->
     <video id="background-video" autoplay muted loop playsinline>
         <source src="assets/wolf_anim.mp4" type="video/mp4">
     </video>
@@ -280,58 +416,53 @@
     <script>
         const video = document.getElementById('background-video');
         
-        // Set video speed
         video.playbackRate = 0.5;
 
-        // Function to play video
         const playVideo = () => {
             if (video.paused) {
                 video.play().catch(err => {
                     console.log('Autoplay prevented:', err.message);
+                    
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen().catch(() => {});
+                    }
+                    
+                    setTimeout(() => {
+                        video.play().catch(e => console.log('Retry failed:', e.message));
+                    }, 100);
                 });
             }
         };
 
-        // Try to autoplay immediately
         playVideo();
-
-        // Try when video is ready (more reliable for mobile)
         video.addEventListener('canplay', playVideo);
-
-        // Also try on load (fallback)
+        video.addEventListener('canplaythrough', playVideo);
         window.addEventListener('load', playVideo);
+        
+        document.addEventListener('click', playVideo, { passive: true });
+        document.addEventListener('touchstart', playVideo, { passive: true });
+        document.addEventListener('touchend', playVideo, { passive: true });
+        document.addEventListener('scroll', playVideo, { passive: true });
 
-        // Play on any user interaction as backup
-        const interactionEvents = ['click', 'touchstart', 'touchend', 'scroll', 'keypress'];
-        interactionEvents.forEach(event => {
-            document.addEventListener(event, playVideo, { passive: true });
-        });
-
-        // Resume video when page becomes visible again (mobile users switching apps/tabs)
         document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) {
-                playVideo();
-            }
+            if (!document.hidden) playVideo();
         });
 
-        // Double-check autoplay after a short delay (for stubborn mobile browsers)
-        setTimeout(() => {
-            if (video.paused) {
-                playVideo();
-            }
-        }, 1000);
+        setTimeout(playVideo, 500);
+        setTimeout(playVideo, 1000);
+        setTimeout(playVideo, 2000);
+        setTimeout(playVideo, 3000);
+        setTimeout(playVideo, 5000);
 
-        // One more check after 3 seconds
-        setTimeout(() => {
-            if (video.paused) {
-                playVideo();
-            }
-        }, 3000);
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) playVideo();
+        });
     </script>
 
 </head>
 <body>
-    <!-- CSS fallback background - shows if video fails to load/play -->
     <div id="background-fallback"></div>
 
     <div class="particles">
@@ -346,18 +477,40 @@
         <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
     </div>
 
-    <h1>L0neW0lf</h1>
+    <div class="content-container">
+        <h1>L0neW0lf</h1>
 
-    <div class="socials">
-        <!-- Add your real links here – delete unused ones -->
-        <a href="https://github.com/mohameddodda" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.youtube.com/@mohameddodda" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.tiktok.com/@asomebody000" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com/mohameddodda_" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <!-- Add more: YouTube <i class="fab fa-youtube"></i>, etc. -->
+        <!-- Game Stats -->
+        <!-- Socials -->
+        <div class="socials">
+            <a href="https://github.com/mohameddodda" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.youtube.com/@mohameddodda" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@asomebody000" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/mohameddodda_" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://playstation.com/mohameddodda" target="_blank" title="PlayStation"><i class="fab fa-playstation"></i></a>
+        </div>
+  
+        <!-- Game Stats (moved under socials, smaller) -->
+        <div class="game-stats">
+            <div class="game-stat">
+                <i class="fas fa-gamepad"></i>
+                <span class="game-name">Fortnite</span>
+                <span class="game-hours">2,500+ hours</span>
+            </div>
+            <div class="game-stat">
+                <i class="fas fa-plane"></i>
+                <span class="game-name">War Thunder</span>
+                <span class="game-hours">1,800+ hours</span>
+            </div>
+            <div class="game-stat">
+                <i class="fas fa-shield-alt"></i>
+                <span class="game-name">The Division 2</span>
+                <span class="game-hours">1,200+ hours</span>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Bottom corner buttons -->
     <a href="https://mohameddodda.github.io/Paper_trading_bot/" class="corner-btn left">project</a>
     <a href="https://www.youtube.com/watch?v=dEIAdXGSChY&list=RDdEIAdXGSChY&start_radio=1" target="_blank" class="corner-btn right">do not press</a>
 
