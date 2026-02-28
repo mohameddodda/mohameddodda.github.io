@@ -211,8 +211,8 @@
             }
         }
     </style>
-    <!-- Video background -->
-    <video id="background-video" muted loop playsinline>
+    <!-- Video background - autoplay added for mobile compatibility -->
+    <video id="background-video" autoplay muted loop playsinline>
         <source src="assets/wolf_anim.mp4" type="video/mp4">
     </video>
 
@@ -221,22 +221,32 @@
         const video = document.getElementById('background-video');
         video.playbackRate = 0.5;
 
-        // Try to autoplay video
+        // Function to play video
         const playVideo = () => {
-            video.play().catch(err => {
-                console.log('Autoplay prevented, waiting for user interaction');
-            });
+            if (video.paused) {
+                video.play().catch(err => {
+                    console.log('Autoplay prevented:', err.message);
+                });
+            }
         };
 
-        // Try immediately on load
-        playVideo();
+        // Try when video is ready (more reliable for mobile)
+        video.addEventListener('canplay', playVideo);
 
-        // Fallback: play on any user interaction (tap, click, scroll)
-        const interactionEvents = ['click', 'touchstart', 'scroll', 'keypress'];
+        // Also try on load (fallback)
+        window.addEventListener('load', playVideo);
+
+        // Play on any user interaction (tap, click, scroll) - works every time, not just once
+        const interactionEvents = ['click', 'touchstart', 'touchend', 'scroll', 'keypress'];
         interactionEvents.forEach(event => {
-            document.addEventListener(event, () => {
+            document.addEventListener(event, playVideo, { passive: true });
+        });
+
+        // Resume video when page becomes visible again (mobile users switching apps/tabs)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
                 playVideo();
-            }, { once: true });
+            }
         });
     </script>
 
