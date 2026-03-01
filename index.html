@@ -28,7 +28,6 @@
             background: #0a0a12;
         }
 
-        /* Video background */
         #background-video {
             position: fixed;
             top: 0;
@@ -39,7 +38,6 @@
             z-index: -2;
         }
 
-        /* CSS fallback background */
         #background-fallback {
             position: fixed;
             top: 0;
@@ -58,16 +56,14 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Main content container with discovery animation */
         .content-container {
             z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 4rem;
         }
 
-        /* Title with discovery animation */
         h1 {
             font-size: 6rem;
             font-weight: bold;
@@ -101,7 +97,6 @@
             }
         }
 
-        /* Game stats section */
         .game-stats {
             display: flex;
             gap: 1rem;
@@ -137,6 +132,13 @@
             color: #58a6ff;
         }
 
+        .game-stat img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
         .game-stat .game-name {
             font-size: 0.65rem;
             color: #8b949e;
@@ -148,7 +150,6 @@
             color: #6e7681;
         }
 
-        /* Socials section */
         .socials {
             display: flex;
             gap: 2.5rem;
@@ -201,7 +202,6 @@
             }
         }
 
-        /* Floating particles */
         .particles {
             position: fixed;
             top: 0;
@@ -239,7 +239,6 @@
             }
         }
 
-        /* Corner buttons */
         .corner-btn {
             position: fixed;
             bottom: 15px;
@@ -263,7 +262,6 @@
             right: 15px;
         }
 
-        /* Glass Windows Container */
         .glass-windows {
             display: flex;
             gap: 2rem;
@@ -300,7 +298,6 @@
             gap: 0.5rem;
         }
 
-        /* Instagram Pictures Grid */
         .insta-pics {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -319,7 +316,6 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* YouTube Embed */
         .youtube-embed {
             width: 100%;
             aspect-ratio: 16/9;
@@ -333,7 +329,6 @@
             height: 100%;
         }
 
-        /* Mobile responsiveness */
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -368,7 +363,6 @@
                 font-size: 2rem;
             }
 
-            /* Glass windows */
             .glass-window {
                 width: 90% !important;
                 max-width: 350px !important;
@@ -480,32 +474,39 @@
     <div class="content-container">
         <h1>L0neW0lf</h1>
 
-        <!-- Game Stats -->
-        <!-- Socials -->
         <div class="socials">
             <a href="https://github.com/mohameddodda" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
             <a href="https://www.youtube.com/@mohameddodda" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
             <a href="https://www.tiktok.com/@asomebody000" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
             <a href="https://www.instagram.com/mohameddodda_" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://playstation.com/mohameddodda" target="_blank" title="PlayStation"><i class="fab fa-playstation"></i></a>
+            <a href="https://profile.playstation.com/mohameddodda" target="_blank" title="PlayStation"><i class="fab fa-playstation"></i></a>
         </div>
   
-        <!-- Game Stats (moved under socials, smaller) -->
         <div class="game-stats">
             <div class="game-stat">
                 <i class="fas fa-gamepad"></i>
                 <span class="game-name">Fortnite</span>
-                <span class="game-hours">2,500+ hours</span>
+                <span class="game-hours">1,500+ hours</span>
             </div>
             <div class="game-stat">
                 <i class="fas fa-plane"></i>
                 <span class="game-name">War Thunder</span>
-                <span class="game-hours">1,800+ hours</span>
+                <span class="game-hours">1,083+ hours</span>
             </div>
             <div class="game-stat">
                 <i class="fas fa-shield-alt"></i>
                 <span class="game-name">The Division 2</span>
-                <span class="game-hours">1,200+ hours</span>
+                <span class="game-hours">187+ hours</span>
+            </div>
+            <div class="game-stat">
+                <i class="fas fa-user-secret"></i>
+                <span class="game-name">Watch Dogs 2</span>
+                <span class="game-hours">100+ hours</span>
+            </div>
+            <div class="game-stat">
+                <i class="fas fa-user-secret"></i>
+                <span class="game-name">Watch Dogs Legion</span>
+                <span class="game-hours">80+ hours</span>
             </div>
         </div>
 
