@@ -160,6 +160,7 @@
             gap: clamp(12px, 3vw, 20px);
             width: 100%;
             margin-top: clamp(30px, 6vw, 50px);
+            justify-content: center;
         }
 
         .card {
@@ -244,117 +245,6 @@
         .btn-main:hover {
             background: var(--accent-purple);
             box-shadow: 0 0 30px rgba(108, 92, 231, 0.4);
-        }
-
-        /* --- Terminal Window --- */
-        .terminal-window {
-            background: rgba(15, 15, 20, 0.85);
-            border: 1px solid var(--glass-border);
-            border-radius: clamp(12px, 3vw, 20px);
-            width: 100%;
-            max-width: 700px;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            margin-top: clamp(24px, 5vw, 40px);
-        }
-
-        .terminal-header {
-            display: flex;
-            align-items: center;
-            padding: clamp(10px, 2.5vw, 15px) clamp(12px, 3vw, 20px);
-            background: rgba(108, 92, 231, 0.1);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .terminal-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .terminal-btn {
-            width: clamp(10px, 2vw, 12px);
-            height: clamp(10px, 2vw, 12px);
-            border-radius: 50%;
-        }
-
-        .terminal-btn.red { background: #ff5f56; }
-        .terminal-btn.yellow { background: #ffbd2e; }
-        .terminal-btn.green { background: #27ca40; }
-
-        .terminal-title {
-            flex: 1;
-            text-align: center;
-            font-family: 'Fira Code', 'Consolas', monospace;
-            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
-            color: var(--text-dim);
-        }
-
-        .terminal-body {
-            padding: clamp(12px, 3vw, 20px);
-            font-family: 'Fira Code', 'Consolas', monospace;
-            font-size: clamp(0.7rem, 2vw, 0.85rem);
-            min-height: 150px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .terminal-line {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-
-        .terminal-prompt {
-            color: var(--accent-purple);
-            margin-right: 8px;
-        }
-
-        .terminal-input-line {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .terminal-input {
-            flex: 1;
-            min-width: 100px;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-bright);
-            font-family: inherit;
-            font-size: inherit;
-            caret-color: var(--accent-purple);
-        }
-
-        .terminal-output {
-            margin-bottom: 15px;
-        }
-
-        .terminal-output .cmd {
-            color: var(--accent-purple);
-        }
-
-        .terminal-output .response {
-            color: var(--text-dim);
-            padding-left: 20px;
-            margin-top: 4px;
-        }
-
-        .terminal-hint {
-            font-size: clamp(0.55rem, 1.5vw, 0.65rem);
-            color: var(--text-dim);
-            opacity: 0.5;
-            margin-top: clamp(8px, 2vw, 10px);
-            text-align: center;
-            padding: 0 10px;
-        }
-
-        .terminal-hint kbd {
-            background: rgba(108, 92, 231, 0.2);
-            padding: 2px 6px;
-            border-radius: 3px;
-            color: var(--accent-purple);
         }
 
         /* --- Hidden Footer Links (now inside footer) --- */
@@ -443,10 +333,6 @@
                 padding: 20px;
             }
             
-            .terminal-window {
-                border-radius: 12px;
-            }
-            
             .card {
                 padding: 20px;
             }
@@ -488,7 +374,7 @@
                 --glass-border: rgba(108, 92, 231, 0.4);
             }
             
-            .card, .project-highlight, .terminal-window {
+            .card, .project-highlight {
                 border-width: 2px;
             }
         }
@@ -504,6 +390,218 @@
                 opacity: 1;
                 transform: none;
             }
+        }
+
+        /* --- Terminal Window Styles (from index.html) --- */
+        .terminal-container {
+            background: rgba(15, 15, 20, 0.85);
+            border: 1px solid var(--glass-border);
+            border-radius: clamp(12px, 3vw, 20px);
+            width: 100%;
+            max-width: 700px;
+            /* Fixed: Use 100dvh for mobile, remove fixed heights to prevent scrollbars */
+            height: auto;
+            min-height: 200px;
+            max-height: 80vh;
+            max-height: 80dvh;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin-top: clamp(24px, 5vw, 40px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: clamp(10px, 2.5vw, 15px) clamp(12px, 3vw, 20px);
+            background: rgba(108, 92, 231, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: clamp(10px, 2vw, 12px);
+            height: clamp(10px, 2vw, 12px);
+            border-radius: 50%;
+        }
+
+        .terminal-btn.close { background: #ff5f56; }
+        .terminal-btn.minimize { background: #ffbd2e; }
+        .terminal-btn.maximize { background: #27ca40; }
+
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+            color: var(--text-dim);
+        }
+
+        .terminal-body {
+            /* Fixed: Use flex to fill available space, remove fixed max-height */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: clamp(12px, 3vw, 20px);
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            min-height: 80px;
+            overflow-y: auto;
+            /* Hide scrollbar but keep functionality */
+            scrollbar-width: thin;
+            scrollbar-color: rgba(108, 92, 231, 0.3) transparent;
+        }
+
+        /* Custom scrollbar for webkit browsers */
+        .terminal-body::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .terminal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: rgba(108, 92, 231, 0.3);
+            border-radius: 2px;
+        }
+
+        .terminal-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(108, 92, 231, 0.5);
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-purple);
+            margin-right: 8px;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 12px 20px;
+            padding-bottom: 12px;
+            background-color: rgba(22, 27, 34, 0.5);
+            border-top: 1px solid #21262d;
+            /* Lock input to terminal border */
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        .terminal-input {
+            flex: 1;
+            min-width: 100px;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-bright);
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: inherit;
+            caret-color: var(--accent-purple);
+        }
+
+        .terminal-output {
+            margin-bottom: 15px;
+        }
+
+        .terminal-output .cmd {
+            color: var(--accent-purple);
+        }
+
+        .terminal-output .response {
+            color: var(--text-dim);
+            padding-left: 20px;
+            margin-top: 4px;
+        }
+
+        .terminal-output .command {
+            color: #c9d1d9;
+        }
+
+        .terminal-output .output {
+            color: #8b949e;
+            margin-bottom: 8px;
+        }
+
+        .terminal-output .error {
+            color: #ff7b72;
+        }
+
+        .terminal-output .warning {
+            color: #d29922;
+        }
+
+        .terminal-output .info {
+            color: #58a6ff;
+        }
+
+        .terminal-output .success {
+            color: #3fb950;
+        }
+
+        .terminal-hint {
+            font-size: clamp(0.55rem, 1.5vw, 0.65rem);
+            color: var(--text-dim);
+            opacity: 0.5;
+            margin-top: clamp(8px, 2vw, 10px);
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .terminal-hint kbd {
+            background: rgba(108, 92, 231, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent-purple);
+        }
+
+        /* Prompt styling */
+        .prompt {
+            color: var(--accent-purple);
+            margin-right: 8px;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .prompt.admin {
+            color: #ff7b72;
+        }
+
+        /* Command input */
+        #command-input {
+            background: transparent;
+            border: none;
+            color: var(--text-bright);
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: clamp(0.7rem, 2vw, 0.85rem);
+            flex: 1;
+            min-width: 100px;
+            outline: none;
+            caret-color: var(--accent-purple);
+        }
+
+        #command-input::selection {
+            background: #388bfd;
+            color: #0d1117;
+        }
+
+        /* Terminal hint styling */
+        .terminal-hint kbd {
+            background: rgba(108, 92, 231, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--accent-purple);
         }
     </style>
 </head>
@@ -550,6 +648,37 @@
 
         <section>
             <div class="project-highlight">
+                <span class="label">TERMINAL ACCESS</span>
+                <h2>Command Line</h2>
+                <p>
+                    Interact with the system through the terminal. 
+                    Type commands to explore the portfolio.
+                </p>
+
+                <!-- Terminal Window -->
+                <div class="terminal-container" id="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="terminal-btn close"></span>
+                            <span class="terminal-btn minimize"></span>
+                            <span class="terminal-btn maximize"></span>
+                        </div>
+                        <div class="terminal-title">guest@L0neW0lf: ~</div>
+                    </div>
+                    <div class="terminal-body" id="terminal-body">
+                        <div class="terminal-output" id="output"></div>
+                        <div class="terminal-input-line">
+                            <span class="prompt" id="prompt">guest@L0neW0lf:~$</span>
+                            <input type="text" id="command-input" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+                <div class="terminal-hint">Type <kbd>help</kbd> for available commands | Press <kbd>Enter</kbd> to execute</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="project-highlight">
                 <span class="label">OWNED DEVICES</span>
                 <h2>Tech Arsenal</h2>
                 <p>
@@ -579,38 +708,6 @@
 
         <section>
             <div class="project-highlight">
-                <span class="label">TERMINAL ACCESS</span>
-                <h2>Command Line</h2>
-                <p>
-                    Interact with the system through the terminal. 
-                    Type commands to explore the portfolio.
-                </p>
-
-                <!-- Terminal Window -->
-                <div class="terminal-window" id="terminal-window">
-                    <div class="terminal-header">
-                        <div class="terminal-buttons">
-                            <div class="terminal-btn red"></div>
-                            <div class="terminal-btn yellow"></div>
-                            <div class="terminal-btn green"></div>
-                        </div>
-                        <div class="terminal-title">guest@L0neW0lf: ~</div>
-                        <div style="width: clamp(36px, 10vw, 52px);"></div>
-                    </div>
-                    <div class="terminal-body" id="terminal-body">
-                        <div class="terminal-output" id="terminal-output"></div>
-                        <div class="terminal-input-line">
-                            <span class="terminal-prompt">guest@L0neW0lf:~$</span>
-                            <input type="text" class="terminal-input" id="terminal-input" placeholder="" autocomplete="off" spellcheck="false">
-                        </div>
-                    </div>
-                </div>
-                <div class="terminal-hint">Type <kbd>help</kbd> for available commands | Press <kbd>Enter</kbd> to execute</div>
-            </div>
-        </section>
-
-        <section>
-            <div class="project-highlight">
                 <span class="label">ENGAGEMENT METRICS</span>
                 <h2>Gaming</h2>
                 <p>
@@ -630,8 +727,13 @@
                     </div>
                     <div class="card">
                         <i class="fas fa-user-secret"></i>
-                        <span class="num"><span>180+</span></span>
+                        <span class="num"><span>75+</span></span>
                         <span class="tag">hrs Watch Dogs</span>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-car"></i>
+                        <span class="num"><span>124+</span></span>
+                        <span class="tag">hrs The Crew Motorfest</span>
                     </div>
                 </div>
             </div>
@@ -692,64 +794,7 @@
                 String(minutes).padStart(2, '0') + ':' +
                 String(secs).padStart(2, '0');
         }, 1000);
-
-        // Terminal Functionality
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalOutput = document.getElementById('terminal-output');
-        const terminalBody = document.getElementById('terminal-body');
-
-        // Command handling
-        const commands = {
-            'help': 'Available commands: help, whoami, skills, projects, contact, date, clear, ls, pwd, neofetch, cat, sudo',
-            'whoami': 'guest@L0neW0lf - Visitor access granted',
-            'skills': 'Python, JavaScript, Automation, Market Analysis',
-            'projects': 'Paper Trading Bot | Tech Arsenal | Command Line Interface',
-            'contact': 'GitHub: @mohameddodda | Instagram: @mohameddodda',
-            'date': new Date().toLocaleString(),
-            'clear': 'CLEAR',
-            'ls': 'assets/  src/  competencies.html  index.html  testingg.html',
-            'pwd': '/home/guest/portfolio',
-            'neofetch': '         guest@L0neW0lf\n         --------------\n         OS: L0neW0lf Portfolio\n         Host: mohameddodda.github.io\n         Kernel: JavaScript + HTML + CSS\n         Shell: glassmorphism-term\n         CPU: Creative Mind\n         Memory: 100% Motivation',
-            'cat': 'Usage: cat [filename] - Try "cat testingg.html"',
-            'testingg.html': 'This is the file you are viewing right now!',
-            'sudo': 'Permission denied: you are not the admin. But nice try. 😏'
-        };
-
-        // Initial welcome message
-        terminalOutput.innerHTML = '<div class="response">Welcome to L0neW0lf Terminal v1.0</div><div class="response">Type "help" to see available commands.</div>';
-
-        terminalInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const cmd = terminalInput.value.trim().toLowerCase();
-                if (cmd) {
-                    const output = commands[cmd];
-                    let responseHTML = '';
-                    
-                    if (output === 'CLEAR') {
-                        terminalOutput.innerHTML = '';
-                    } else if (output) {
-                        responseHTML = '<div class="response">' + output + '</div>';
-                        terminalOutput.innerHTML += '<div><span class="terminal-prompt">guest@L0neW0lf:~$</span>' + cmd + '</div>' + responseHTML;
-                    } else {
-                        terminalOutput.innerHTML += '<div><span class="terminal-prompt">guest@L0neW0lf:~$</span>' + cmd + '</div><div class="response">Command not found. Type "help" for available commands.</div>';
-                    }
-                    
-                    terminalBody.scrollTop = terminalBody.scrollHeight;
-                }
-                terminalInput.value = '';
-            }
-        });
-
-        // Focus terminal only when clicked
-        const terminalWindow = document.getElementById('terminal-window');
-        terminalWindow.addEventListener('click', () => {
-            terminalInput.focus();
-        });
-
-        // Handle window resize for terminal
-        window.addEventListener('resize', () => {
-            terminalBody.style.maxHeight = Math.min(300, window.innerHeight * 0.4) + 'px';
-        });
     </script>
+    <script src="assets/Terminal/terminal.js"></script>
 </body>
 </html>

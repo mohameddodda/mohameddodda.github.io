@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="terminal-container" id="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="terminal-btn close"></span>
+                <span class="terminal-btn minimize"></span>
+                <span class="terminal-btn maximize"></span>
+            </div>
+            <div class="terminal-title">L0neW0lf — Bash</div>
+        </div>
+        <div class="terminal-output" id="output"></div>
+        <div class="terminal-input-line">
+            <span class="prompt" id="prompt">guest@L0neW0lf:~$</span>
+            <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+    </div>
+    <script src="terminal.js"></script>
+</body>
+</html>
+
