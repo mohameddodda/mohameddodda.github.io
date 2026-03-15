@@ -33,8 +33,19 @@ class OutputRenderer {
     }
 
     scrollToBottom() {
-        const terminal = document.getElementById('terminal');
-        terminal.scrollTop = terminal.scrollHeight;
+        const terminalBody = document.querySelector('.terminal-body');
+        const terminalOutput = document.getElementById('output');
+        
+        // Use requestAnimationFrame for smoother scrolling on all devices
+        requestAnimationFrame(() => {
+            // Scroll both elements to ensure proper scrolling
+            if (terminalBody) {
+                terminalBody.scrollTop = terminalBody.scrollHeight;
+            }
+            if (terminalOutput) {
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+        });
     }
 
     clear() {
@@ -181,13 +192,12 @@ class CommandRegistry {
 Hi, I'm Mohamed 👋
 
 Full-stack developer...in the making.  
-I like building fast, reliable things people actually enjoy using.
+I like building fast, reliable things people actually enjoy using, and benefiting from.
 
-Currently exploring: [Ai's / personal project e.g. "Paper_Trading_Bot", "This Terminal we are in", "GPU-accelerated creative tools", …]
+Currently exploring: [Ai's / personal project e.g. "Paper_Trading_Bot", "This Terminal we are in", "Flipper Zero"].
 
 Tech I enjoy working with lately:
-• [language 1] + [framework/ecosystem]
-• [language 2] when performance matters
+• [Python + Visual studio code]
 • [Flipper zero / For *ethical* daily use]
 
 Find me:
@@ -234,7 +244,7 @@ Type <strong>projects</strong> to see my work or <strong>socials</strong> to con
         this.register('ls', (args, flags, registry) => {
             const items = [
                 ['about.txt', 'Learn about me'],
-                ['projects/', 'My work'],
+                ['projects/', 'What I work on, In my free time'],
                 ['socials.txt', 'Contact info'],
                 ['secret/', 'Admin only area']
             ];
@@ -451,10 +461,10 @@ Type <strong>projects</strong> to see my work or <strong>socials</strong> to con
             }
 
             const notes = [
-                '1. Optimize API calls',
-                '2. Update Portfolio CSS',
-                '3. Review security logs',
-                '4. Backup database'
+                '1. Updateand upgrade site' ,
+                '2. Update creative portfolio',
+                '3. Review paper trading bot codebase',
+                '4. Relax and think'
             ];
 
             let notesText = '<strong>My Tasks:</strong><br><br>';
@@ -512,10 +522,10 @@ class Terminal {
     boot(wasAuthorized = false) {
         const bootMessages = [
             { text: 'booting up...Fingers crossed.', delay: 1500 },
-            { text: 'Loading kernel...Please don\'t crash, Please don\'t crash...', delay: 2000 },
-            { text: 'Initializing system... Waking up the hamster on the wheel.', delay: 1300 },
-            { text: 'Establishing connection...', delay: 1600 },
-            { text: 'Hello, world? Nah, hello chaos! ', delay: 1000, isFinal: true }
+            { text: 'Loading kernel...Please don\'t crash, Please don\'t crash...', delay: 2500 },
+            { text: 'Initializing system... Waking up the hamster on the wheel.', delay: 1800 },
+            { text: 'Establishing connection...', delay: 1800 },
+            { text: 'Hello, world? Nah, hello chaos! ', delay: 1300, isFinal: true }
         ];
 
         let messageIndex = 0;
@@ -630,7 +640,7 @@ class Terminal {
             }
         });
 
-        // Only focus terminal when clicking inside the terminal container
+        // Focus terminal when clicking inside the terminal container
         const terminalContainer = document.querySelector('.terminal-container');
         if (terminalContainer) {
             terminalContainer.addEventListener('click', () => {
@@ -638,7 +648,36 @@ class Terminal {
                     this.focusInput();
                 }
             });
+            
+            // iOS-specific: Handle touch events for better mobile experience
+            terminalContainer.addEventListener('touchstart', (e) => {
+                // Don't interfere with scrolling if touching the scrollable area
+                const target = e.target;
+                if (target.closest('.terminal-body') || target.closest('.terminal-output')) {
+                    return;
+                }
+                if (!this.state.isWaitingForInput) {
+                    this.focusInput();
+                }
+            }, { passive: true });
         }
+        
+        // iOS-specific: Prevent viewport zooming on input focus
+        this.inputElement.addEventListener('focus', () => {
+            // Prevent zoom on iOS
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            }
+        });
+        
+        this.inputElement.addEventListener('blur', () => {
+            // Restore viewport on blur
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+            }
+        });
     }
 
     focusInput() {
@@ -692,5 +731,131 @@ class Terminal {
 // Initialize terminal when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new Terminal();
+});
+
+// Terminal Window Control Buttons (Red, Yellow, Green)
+document.addEventListener('DOMContentLoaded', () => {
+    // Support both class naming conventions (close/minimize/maximize OR red/yellow/green)
+    const terminalContainer = document.querySelector('.terminal-container, .terminal-window');
+    const closeBtn = document.querySelector('.terminal-btn.close, .terminal-btn.red');
+    const minimizeBtn = document.querySelector('.terminal-btn.minimize, .terminal-btn.yellow');
+    const maximizeBtn = document.querySelector('.terminal-btn.maximize, .terminal-btn.green');
+    
+    if (!terminalContainer || !closeBtn || !minimizeBtn || !maximizeBtn) return;
+    
+    let isMinimized = false;
+    let isMaximized = false;
+    
+    // Create a floating button to restore the terminal after closing
+    const floatingBtn = document.createElement('div');
+    floatingBtn.id = 'terminal-restore-btn';
+    floatingBtn.innerHTML = '$_';
+    floatingBtn.title = 'Restore Terminal';
+    floatingBtn.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: rgba(108, 92, 231, 0.9);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(108, 92, 231, 0.4);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        font-size: 18px;
+        font-family: 'Fira Code', monospace;
+        color: #fff;
+    `;
+    
+    floatingBtn.addEventListener('mouseenter', () => {
+        floatingBtn.style.transform = 'scale(1.1)';
+        floatingBtn.style.boxShadow = '0 6px 25px rgba(108, 92, 231, 0.6)';
+    });
+    
+    floatingBtn.addEventListener('mouseleave', () => {
+        floatingBtn.style.transform = 'scale(1)';
+        floatingBtn.style.boxShadow = '0 4px 20px rgba(108, 92, 231, 0.4)';
+    });
+    
+    // Initially hide the floating button
+    floatingBtn.style.display = 'none';
+    document.body.appendChild(floatingBtn);
+    
+    // Close Button - Hide the terminal and show floating restore button
+    closeBtn.addEventListener('click', () => {
+        terminalContainer.style.display = 'none';
+        floatingBtn.style.display = 'flex';
+    });
+    
+    // Floating button click - restore the terminal
+    floatingBtn.addEventListener('click', () => {
+        terminalContainer.style.display = 'flex';
+        floatingBtn.style.display = 'none';
+        // Reset states
+        isMinimized = false;
+        isMaximized = false;
+        terminalContainer.style.maxWidth = '';
+        terminalContainer.style.maxHeight = '';
+        terminalContainer.style.height = '';
+        terminalContainer.style.marginTop = '';
+        terminalContainer.style.borderRadius = '';
+        
+        const terminalBody = terminalContainer.querySelector('.terminal-body');
+        const terminalInputLine = terminalContainer.querySelector('.terminal-input-line');
+        const terminalHeader = terminalContainer.querySelector('.terminal-header');
+        if (terminalBody) terminalBody.style.display = 'flex';
+        if (terminalInputLine) terminalInputLine.style.display = 'flex';
+        if (terminalHeader) terminalHeader.style.padding = '';
+    });
+    
+    // Minimize Button - Collapse the terminal
+    minimizeBtn.addEventListener('click', () => {
+        isMinimized = !isMinimized;
+        const terminalBody = terminalContainer.querySelector('.terminal-body');
+        const terminalInputLine = terminalContainer.querySelector('.terminal-input-line');
+        const terminalHeader = terminalContainer.querySelector('.terminal-header');
+        
+        if (isMinimized) {
+            // Collapse everything except the header
+            if (terminalBody) terminalBody.style.display = 'none';
+            if (terminalInputLine) terminalInputLine.style.display = 'none';
+            // Make header minimal
+            if (terminalHeader) {
+                terminalHeader.style.padding = '8px 20px';
+            }
+            terminalContainer.style.minHeight = 'auto';
+        } else {
+            // Restore everything
+            if (terminalBody) terminalBody.style.display = 'flex';
+            if (terminalInputLine) terminalInputLine.style.display = 'flex';
+            if (terminalHeader) terminalHeader.style.padding = '';
+            terminalContainer.style.minHeight = '';
+        }
+    });
+    
+    // Maximize Button - Toggle fullscreen/maximize
+    maximizeBtn.addEventListener('click', () => {
+        isMaximized = !isMaximized;
+        
+        if (isMaximized) {
+            // Apply maximize styles
+            terminalContainer.style.maxWidth = '100%';
+            terminalContainer.style.maxHeight = '100vh';
+            terminalContainer.style.height = '100vh';
+            terminalContainer.style.marginTop = '0';
+            terminalContainer.style.borderRadius = '0';
+        } else {
+            // Restore original styles
+            terminalContainer.style.maxWidth = '';
+            terminalContainer.style.maxHeight = '';
+            terminalContainer.style.height = '';
+            terminalContainer.style.marginTop = '';
+            terminalContainer.style.borderRadius = '';
+        }
+    });
 });
 

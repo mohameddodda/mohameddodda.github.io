@@ -10,19 +10,22 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="terminal-container" id="terminal">
+    <div class="terminal-window" id="terminal">
         <div class="terminal-header">
             <div class="terminal-buttons">
-                <span class="terminal-btn close"></span>
-                <span class="terminal-btn minimize"></span>
-                <span class="terminal-btn maximize"></span>
+                <span class="terminal-btn red"></span>
+                <span class="terminal-btn yellow"></span>
+                <span class="terminal-btn green"></span>
             </div>
             <div class="terminal-title">L0neW0lf — Bash</div>
         </div>
-        <div class="terminal-output" id="output"></div>
-        <div class="terminal-input-line">
-            <span class="prompt" id="prompt">guest@L0neW0lf:~$</span>
-            <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus>
+        <div class="terminal-body">
+            <div class="terminal-output" id="output"></div>
+            <div class="terminal-input-line">
+                <span class="terminal-prompt" id="prompt">guest@L0neW0lf:~$</span>
+                <input type="text" class="terminal-input" id="command-input" autocomplete="off" spellcheck="false" autofocus>
+            </div>
+            <div class="terminal-hint">Press <kbd>Enter</kbd> to run command • <kbd>Tab</kbd> for autocomplete</div>
         </div>
     </div>
     <script src="terminal.js"></script>
