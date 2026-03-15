@@ -356,6 +356,17 @@
             display: flex;
             flex-direction: column;
             min-height: 400px;
+            max-height: 90dvh;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 700px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin-top: clamp(24px, 5vw, 40px);
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
             max-height: 90vh;
             max-height: 90dvh;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -403,11 +414,11 @@
             font-family: 'Fira Code', 'Consolas', monospace;
             font-size: clamp(0.7rem, 2vw, 0.85rem);
             min-height: 150px;
-            max-height: 300px;
             overflow-y: auto;
             flex: 1;
             display: flex;
             flex-direction: column;
+            -webkit-overflow-scrolling: touch;
         }
 
         .terminal-line { margin-bottom: 8px; line-height: 1.6; }
@@ -439,6 +450,7 @@
             overflow-y: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
+            -webkit-overflow-scrolling: touch;
         }
 
         .terminal-output .command { color: var(--text-bright); }
@@ -472,11 +484,44 @@
             color: var(--accent-purple);
         }
 
-        .terminal-output::-webkit-scrollbar, .terminal-body::-webkit-scrollbar { width: 4px; }
-        .terminal-output::-webkit-scrollbar-track, .terminal-body::-webkit-scrollbar-track { background: transparent; }
-        .terminal-output::-webkit-scrollbar-thumb, .terminal-body::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
-        .terminal-output::-webkit-scrollbar-thumb:hover, .terminal-body::-webkit-scrollbar-thumb:hover { background: var(--accent-purple); }
-        .terminal-output, .terminal-body { scrollbar-width: thin; scrollbar-color: var(--glass-border) transparent; }
+        /* iOS-specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .terminal-body {
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .terminal-output {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .terminal-body {
+                padding-bottom: 20px;
+            }
+            
+            .terminal-input-line {
+                position: sticky;
+                bottom: 0;
+                background: rgba(22, 27, 34, 0.95);
+                -webkit-backdrop-filter: blur(10px);
+            }
+        }
+
+        /* Hide Scrollbar - Keep scrolling functionality */
+        .terminal-output,
+        .terminal-body {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+            -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+        }
+
+        .terminal-output::-webkit-scrollbar,
+        .terminal-body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
 
         .ascii-art { color: var(--text-bright); font-size: 10px; line-height: 1.1; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
         .welcome-message { color: var(--text-bright); margin-bottom: 16px; }
@@ -509,7 +554,7 @@
             .terminal-btn { width: 10px; height: 10px; }
             .terminal-buttons { gap: 6px; left: 12px; }
             .terminal-title { font-size: 11px; }
-            .terminal-body { padding: 10px 12px; font-size: 12px; min-height: 100px; max-height: none; }
+            .terminal-body { padding: 10px 12px; font-size: 12px; min-height: 100px; max-height: none; padding-bottom: 60px; }
             .terminal-prompt, .prompt { font-size: 11px; }
             .terminal-input, #command-input { font-size: 12px; }
             .ascii-art { font-size: 6px; }
